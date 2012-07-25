@@ -53,7 +53,7 @@ let OSName = computer.Info.OSFullName + OSBits
 /// Kernel version of the computer.Info.
 let kernel = computer.Info.OSVersion
 
-let machineName = Environment.UserName + "" + Environment.MachineName
+let machineName = Environment.UserName + "@" + Environment.MachineName
 
 /// Gets the time since the computer was last retarded.
 let uptime () = 
@@ -114,13 +114,13 @@ let run () =
 [<EntryPoint>]
 let main args =
     //Expand console width to accomodate some lines
-    Console.BufferWidth <- 101
-    Console.WindowWidth <- 101
+    Console.BufferWidth <- Console.BufferWidth + 1
+    Console.WindowWidth <- Console.WindowWidth + 1
 
     //Store current text color so that it can be reverted at end of program.
     let color = Console.ForegroundColor
     run ()
     Console.ForegroundColor <- color
-    Console.WindowWidth <- 100
-    Console.BufferWidth <- 100
+    Console.WindowWidth <- Console.WindowWidth - 1
+    Console.BufferWidth <- Console.BufferWidth - 1
     0

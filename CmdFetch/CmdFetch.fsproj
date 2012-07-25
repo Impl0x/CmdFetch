@@ -9,8 +9,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CmdFetch</RootNamespace>
     <AssemblyName>CmdFetch</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Name>CmdFetch</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
