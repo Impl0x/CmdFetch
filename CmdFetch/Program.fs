@@ -1,5 +1,6 @@
 ﻿open System
 open System.Drawing
+open System.Drawing.Imaging
 open System.IO
 open System.Text.RegularExpressions
 open System.Threading
@@ -33,7 +34,7 @@ let totalSpace = (primaryDrive.TotalSize / int64 1073741824)
 let usedSpace = (totalSpace - (primaryDrive.AvailableFreeSpace / int64 1073741824))
 
 /// System.Drawing.Rectangle used to store the dimensions of the primary display screen.
-let screen = Windows.Forms.Screen.PrimaryScreen.Bounds
+let screen = Screen.PrimaryScreen.Bounds
 
 /// Total RAM (in megabytes) that is available to the system.
 let totalRAM = computer.Info.TotalPhysicalMemory / 1048576UL
@@ -62,6 +63,13 @@ let uptime () =
     let minutes = (millis / (1000 * 60)) % 60 |> string
     let hours = (millis / (1000 * 60 * 60)) % 24 |> string
     hours + "hrs "  + minutes + "mins " + seconds + "secs"
+
+/// Captures a picture of the whole screen and saves the image to the desktop.
+let saveScreenShot () =
+    let screenBitmap = new Bitmap (screen.Width, screen.Height, PixelFormat.Format32bppArgb)
+    let screenGraphicsObject = Graphics.FromImage (screenBitmap)
+    screenGraphicsObject.CopyFromScreen (screen.X, screen.Y, 0, 0, screen.Size, CopyPixelOperation.SourceCopy)
+    screenBitmap.Save ((Environment.GetFolderPath Environment.SpecialFolder.Desktop) + @"\screenShot.png", ImageFormat.Png)
 
 let rawFlag = "\n
          #R,.=:!!t3Z3z.,               #w " + machineName + "}
@@ -121,6 +129,14 @@ let main args =
     let color = Console.ForegroundColor
     run ()
     Console.ForegroundColor <- color
+
+    if args = [|"-s"|] then
+        printf "Taking screenshot in "
+        for i = 5 downto 1 do
+            printf "%i... " i
+            Thread.Sleep 1000
+        saveScreenShot ()
+
     Console.WindowWidth <- Console.WindowWidth - 1
     Console.BufferWidth <- Console.BufferWidth - 1
     0
