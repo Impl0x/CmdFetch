@@ -86,7 +86,7 @@ let rawFlag = "\n
   #B;:::::::::t33V #Y;EEEttttt::::t3      #g#w }
   #BE::::::::zt33L #Y@EEEtttt::::z3F      #g#w }
  #B{3=*^```'*4E3) #Y;EEEtttt:::::tZ`      #g#w }
-             #B` #Y:EEEEtttt::::z7 #g#w " + string DateTime.Now + "}
+             #B` #Y:EEEEtttt::::z7 #g#w " + DateTime.UtcNow.ToString ("s", System.Globalization.CultureInfo.InvariantCulture) + "}
                  #Y'VEzjt:;;z>*`\n\n"
 
 let run () =
